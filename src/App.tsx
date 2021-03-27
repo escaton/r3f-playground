@@ -40,13 +40,14 @@ function App() {
             <Canvas>
                 <Gradient />
             </Canvas>
-            <div
+            {/* <div
                 className="go-to-fs"
                 style={{ opacity: isFS ? 0 : 0.5 }}
                 onClick={onClick}
             >
                 fullscreen
-            </div>
+            </div> */}
+            <div className="plus" onClick={onClick}/>
         </div>
     );
 }
@@ -60,21 +61,23 @@ const Gradient: FC = () => {
     const y = useRef(Math.random() * 32);
     const vCheck = useRef(false);
 
-    useFrame(() => {
+    useFrame((_, delta) => {
         const material = Array.isArray(meshRef.current.material)
             ? (meshRef.current.material[0] as ShaderMaterial)
             : (meshRef.current.material as ShaderMaterial);
         material.uniforms.u_randomisePosition.value = [j.current, j.current];
         material.uniforms.u_time.value = t.current;
-        material.uniforms.u_color1.value = [
-            R(x.current, y.current, t.current / 2),
-            G(x.current, y.current, t.current / 2),
-            B(x.current, y.current, t.current / 2),
-        ];
-        meshRef.current.rotation.z = -t.current / 60;
+        // material.uniforms.u_color1.value = [
+        //     R(x.current, y.current, t.current / 2),
+        //     G(x.current, y.current, t.current / 2),
+        //     B(x.current, y.current, t.current / 2),
+        // ];
+        meshRef.current.rotation.z = 6 + -t.current / 60;
 
-        j.current += 0.01;
-        t.current += 0.05;
+        // j.current += 0.01;
+        j.current += delta * 0.7;
+        // t.current += 0.05;
+        t.current += delta * 3;
 
         if (t.current % 0.1 === 0) {
             if (vCheck.current === false) {
@@ -93,10 +96,11 @@ const Gradient: FC = () => {
 
     const uniforms = useMemo(
         () => ({
-            u_bg: { type: 'v3', value: rgb(162, 138, 241) },
-            u_bgMain: { type: 'v3', value: rgb(162, 138, 241) },
-            u_color1: { type: 'v3', value: rgb(162, 138, 241) },
-            u_color2: { type: 'v3', value: rgb(82, 31, 241) },
+            u_bg: { type: 'v3', value: rgb(0x42, 0x33, 0xfe) },
+            u_bgMain: { type: 'v3', value: rgb(0xec, 0xa6, 0x4e) },
+            u_color1: { type: 'v3', value: rgb(0xff, 0xcc, 0) },
+            // u_color2: { type: 'v3', value: rgb(0xff, 0x65, 0x01) },
+            u_color2: { type: 'v3', value: rgb(0x48, 0xcc, 0xe0) },
             u_time: { type: 'f', value: 0 },
             u_randomisePosition: {
                 type: 'v2',
@@ -110,8 +114,8 @@ const Gradient: FC = () => {
         <mesh
             ref={meshRef}
             position={[0, 0, -280]}
-            scale={[4, 4, 4]}
-            rotation={[0, 0, 1]}
+            scale={[3, 3, 3]}
+            rotation={[0, 0, 0]}
         >
             <planeGeometry args={[400, 400, 100, 100]} />
             <shaderMaterial
