@@ -1,49 +1,47 @@
-import { FC, MouseEvent, useMemo, useRef, useState } from 'react';
-import { Canvas, MeshProps, useFrame } from 'react-three-fiber';
-import { mergeUniforms, Mesh, ShaderMaterial } from 'three';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { Canvas, useFrame } from 'react-three-fiber';
+import { Mesh, ShaderMaterial } from 'three';
 
+import { R, G, B } from './utils';
 import * as shaders from './shaders';
 
 import './App.css';
 
 const rgb = <T extends any>(...args: T[]): T[] => args;
 
-type RGBFunc = (x: number, y: number, t: number) => number;
-
-var R: RGBFunc = function (x, y, t) {
-    return Math.floor(192 + 64 * Math.cos((x * x - y * y) / 300 + t));
-};
-
-var G: RGBFunc = function (x, y, t) {
-    return Math.floor(
-        192 +
-            64 *
-                Math.sin(
-                    (x * x * Math.cos(t / 4) + y * y * Math.sin(t / 3)) / 300
-                )
-    );
-};
-
-var B: RGBFunc = function (x, y, t) {
-    return Math.floor(
-        192 +
-            64 *
-                Math.sin(
-                    5 * Math.sin(t / 9) +
-                        ((x - 100) * (x - 100) + (y - 100) * (y - 100)) / 1100
-                )
-    );
-};
-
 function App() {
-    const onClick = ({currentTarget}: MouseEvent<HTMLDivElement>) => {
-        currentTarget.requestFullscreen();
-    }
+    const appRef = useRef<HTMLDivElement>(null!);
+    const onClick = () => {
+        appRef.current.requestFullscreen();
+    };
+
+    const [isFS, setIsFS] = useState(false);
+
+    useEffect(() => {
+        const onFullscreenChange = () => {
+            setIsFS(!!document.fullscreenElement);
+        };
+        document.addEventListener('fullscreenchange', onFullscreenChange);
+        onFullscreenChange();
+        return () =>
+            document.removeEventListener(
+                'fullscreenchange',
+                onFullscreenChange
+            );
+    }, []);
+
     return (
-        <div className="App" onClick={onClick}>
+        <div className="App" ref={appRef}>
             <Canvas>
                 <Gradient />
             </Canvas>
+            <div
+                className="go-to-fs"
+                style={{ opacity: isFS ? 0 : .5 }}
+                onClick={onClick}
+            >
+                fullscreen
+            </div>
         </div>
     );
 }
@@ -68,7 +66,7 @@ const Gradient: FC = () => {
             G(x.current, y.current, t.current / 2),
             B(x.current, y.current, t.current / 2),
         ];
-        meshRef.current.rotation.z = -t.current/60;
+        meshRef.current.rotation.z = -t.current / 60;
 
         j.current += 0.01;
         t.current += 0.05;
@@ -112,12 +110,6 @@ const Gradient: FC = () => {
         >
             <planeGeometry args={[400, 400, 100, 100]} />
             <shaderMaterial
-                // uniforms-u_bg-value={[162, 138, 241]}
-                // uniforms-u_bgMain-value={[162, 138, 241]}
-                // uniforms-u_color1-value={[162, 138, 241]}
-                // uniforms-u_color2-value={[82, 31, 241]}
-                // uniforms-u_time-value={0}
-                // uniforms-u_randomisePosition-value={[1,2]}
                 uniforms={uniforms}
                 fragmentShader={shaders.snoise + shaders.fragment}
                 vertexShader={shaders.snoise + shaders.vertex}
@@ -125,38 +117,5 @@ const Gradient: FC = () => {
         </mesh>
     );
 };
-
-// const Box: FC<Partial<MeshProps>> = (props) => {
-//     // This reference will give us direct access to the mesh
-//     const mesh = useRef<Mesh>(null!);
-
-//     // Set up state for the hovered and active state
-//     const [hovered, setHover] = useState(false);
-//     const [active, setActive] = useState(false);
-
-//     // Rotate mesh every frame, this is outside of React without overhead
-
-//     const rotationSpeed = Math.PI;
-
-//     useFrame((_, delta) => {
-//         const rotate = delta*rotationSpeed;
-//         // console.log(delta, rotate)
-//         mesh.current.rotation.x = mesh.current.rotation.y += hovered ? rotate/2 : rotate;
-//     });
-
-//     return (
-//         <mesh
-//             {...props}
-//             ref={mesh}
-//             scale={active ? [1.5, 1.5, 1.5] : [1, 1, 1]}
-//             onClick={(event) => setActive(!active)}
-//             onPointerOver={(event) => setHover(true)}
-//             onPointerOut={(event) => setHover(false)}
-//         >
-//             <boxBufferGeometry args={[1, 1, 1]} />
-//             <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-//         </mesh>
-//     );
-// };
 
 export default App;

@@ -2,3 +2,16 @@
     width: 100vw;
     height: 100vh;
 }
+
+.go-to-fs {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-weight: 400;
+    font-size: 40px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    color: #000;
+    mix-blend-mode: soft-light;
+    transition: opacity .3s ease-in-out;
+}
