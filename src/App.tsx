@@ -23,6 +23,11 @@ function App() {
         };
         document.addEventListener('fullscreenchange', onFullscreenChange);
         onFullscreenChange();
+
+        if (appRef.current.requestFullscreen === undefined) {
+            setIsFS(true);
+        }
+
         return () =>
             document.removeEventListener(
                 'fullscreenchange',
@@ -37,7 +42,7 @@ function App() {
             </Canvas>
             <div
                 className="go-to-fs"
-                style={{ opacity: isFS ? 0 : .5 }}
+                style={{ opacity: isFS ? 0 : 0.5 }}
                 onClick={onClick}
             >
                 fullscreen
