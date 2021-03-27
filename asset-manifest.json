@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/r3f-playground/static/css/main.7a64a448.chunk.css",
-    "main.js": "/r3f-playground/static/js/main.6251cac2.chunk.js",
-    "main.js.map": "/r3f-playground/static/js/main.6251cac2.chunk.js.map",
+    "main.css": "/r3f-playground/static/css/main.8782a2fe.chunk.css",
+    "main.js": "/r3f-playground/static/js/main.08ad30f8.chunk.js",
+    "main.js.map": "/r3f-playground/static/js/main.08ad30f8.chunk.js.map",
     "runtime-main.js": "/r3f-playground/static/js/runtime-main.6bb3b421.js",
     "runtime-main.js.map": "/r3f-playground/static/js/runtime-main.6bb3b421.js.map",
-    "static/js/2.7aa14872.chunk.js": "/r3f-playground/static/js/2.7aa14872.chunk.js",
-    "static/js/2.7aa14872.chunk.js.map": "/r3f-playground/static/js/2.7aa14872.chunk.js.map",
+    "static/js/2.996c7008.chunk.js": "/r3f-playground/static/js/2.996c7008.chunk.js",
+    "static/js/2.996c7008.chunk.js.map": "/r3f-playground/static/js/2.996c7008.chunk.js.map",
     "index.html": "/r3f-playground/index.html",
-    "static/css/main.7a64a448.chunk.css.map": "/r3f-playground/static/css/main.7a64a448.chunk.css.map",
-    "static/js/2.7aa14872.chunk.js.LICENSE.txt": "/r3f-playground/static/js/2.7aa14872.chunk.js.LICENSE.txt"
+    "static/css/main.8782a2fe.chunk.css.map": "/r3f-playground/static/css/main.8782a2fe.chunk.css.map",
+    "static/js/2.996c7008.chunk.js.LICENSE.txt": "/r3f-playground/static/js/2.996c7008.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.6bb3b421.js",
-    "static/js/2.7aa14872.chunk.js",
-    "static/css/main.7a64a448.chunk.css",
-    "static/js/main.6251cac2.chunk.js"
+    "static/js/2.996c7008.chunk.js",
+    "static/css/main.8782a2fe.chunk.css",
+    "static/js/main.08ad30f8.chunk.js"
   ]
 }
